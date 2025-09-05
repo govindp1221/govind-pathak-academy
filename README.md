@@ -1,3 +1,43 @@
+# The Govind Pathak Academy
+
+Modern course-selling platform built with Next.js (App Router) + Tailwind, MongoDB, and Razorpay placeholder.
+
+## Setup
+
+1. Copy `.env.example` to `.env.local` and fill values:
+
+```
+MONGODB_URI=...
+MONGODB_DB_NAME=...
+JWT_SECRET=...
+RAZORPAY_KEY_ID=...
+RAZORPAY_KEY_SECRET=...
+```
+
+2. Install dependencies:
+
+```
+npm install
+```
+
+3. Run dev server:
+
+```
+npm run dev
+```
+
+## Structure
+
+- Public pages: `/`, `/courses`, `/course/[slug]`, `/about`, `/contact`, `/success`
+- Admin: `/admin/login`, `/admin/dashboard`, `/admin/orders`
+- API: `/api/courses`, `/api/orders`, `/api/admin/login`, `/api/payments/razorpay`
+
+## Notes
+
+- Admin routes are protected by middleware checking a JWT cookie.
+- Payments are placeholders; wire Razorpay frontend and webhook later.
+- Course delivery (email/WhatsApp) is stubbed; integrate providers later.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
