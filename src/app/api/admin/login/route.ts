@@ -22,8 +22,9 @@ export async function POST(req: NextRequest) {
 			maxAge: 60 * 60 * 24 * 7,
 		});
 		return res;
-	} catch (err: any) {
-		return NextResponse.json({ error: err.message || "Invalid input" }, { status: 400 });
+	} catch (err) {
+		const message = err instanceof Error ? err.message : "Invalid input";
+		return NextResponse.json({ error: message }, { status: 400 });
 	}
 }
 

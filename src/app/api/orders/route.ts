@@ -29,8 +29,9 @@ export async function POST(req: NextRequest) {
 			deliveredBy: input.deliveredBy,
 		});
 		return NextResponse.json(created, { status: 201 });
-	} catch (err: any) {
-		return NextResponse.json({ error: err.message }, { status: 400 });
+	} catch (err) {
+		const message = err instanceof Error ? err.message : "Invalid input";
+		return NextResponse.json({ error: message }, { status: 400 });
 	}
 }
 

@@ -4,9 +4,11 @@ import CourseCard from "@/components/CourseCard";
 
 export const dynamic = "force-dynamic";
 
+type LeanCourse = { _id?: string; slug: string; title: string; description: string; priceInRupees: number };
+
 export default async function CoursesPage() {
 	const hasDb = Boolean(process.env.MONGODB_URI);
-	let courses: any[] = [];
+	let courses: LeanCourse[] = [];
 	if (hasDb) {
 		await connectToDatabase();
 		courses = await Course.find({ isLive: true }).lean();
@@ -19,7 +21,7 @@ export default async function CoursesPage() {
 			)}
 			<div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 				{courses.length > 0 ? (
-					courses.map((c: any) => (
+					courses.map((c: LeanCourse) => (
 						<CourseCard key={c._id} slug={c.slug} title={c.title} description={c.description} priceInRupees={c.priceInRupees} />
 					))
 				) : (

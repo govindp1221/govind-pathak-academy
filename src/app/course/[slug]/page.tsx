@@ -4,14 +4,15 @@ import Link from "next/link";
 import UpiPay from "@/components/UpiPay";
 
 type Params = { params: Promise<{ slug: string }> };
+type LeanCourse = { slug: string; title: string; description: string; priceInRupees: number; content: { pdfUrls: string[]; audioUrls: string[]; bonuses: string[] } };
 
 export default async function CourseDetailPage({ params }: Params) {
 	const { slug } = await params;
 	const hasDb = Boolean(process.env.MONGODB_URI);
-	let course: any = null;
+	let course: LeanCourse | null = null;
 	if (hasDb) {
 		await connectToDatabase();
-		course = await Course.findOne({ slug }).lean();
+		course = (await Course.findOne({ slug }).lean()) as unknown as LeanCourse | null;
 		if (!course) return <div className="mx-auto max-w-3xl px-4 py-12">Course not found.</div>;
 	} else {
 		// Minimal placeholder when DB isn't configured

@@ -3,14 +3,16 @@ import Course from "@/models/Course";
 
 export const dynamic = "force-dynamic";
 
+type LeanCourse = { _id: string; title: string; slug: string; priceInRupees: number; isLive: boolean };
+
 export default async function AdminDashboardPage() {
 	await connectToDatabase();
-	const courses = await Course.find().sort({ createdAt: -1 }).lean();
+	const courses = (await Course.find().sort({ createdAt: -1 }).lean()) as unknown as LeanCourse[];
 	return (
 		<section className="mx-auto max-w-6xl px-4 py-10">
 			<h1 className="text-2xl font-semibold">Course Manager</h1>
 			<div className="mt-6 grid gap-4">
-				{courses.map((c: any) => (
+				{courses.map((c: LeanCourse) => (
 					<div key={c._id} className="rounded border p-4">
 						<div className="flex items-center justify-between">
 							<div>

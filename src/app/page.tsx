@@ -1,4 +1,4 @@
-import Image from "next/image";
+// Home page hero
 
 export default function Home() {
   return (

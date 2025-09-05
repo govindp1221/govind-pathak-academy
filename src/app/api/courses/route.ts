@@ -20,8 +20,9 @@ export async function POST(req: NextRequest) {
 		await connectToDatabase();
 		const created = await Course.create(input);
 		return NextResponse.json(created, { status: 201 });
-	} catch (err: any) {
-		return NextResponse.json({ error: err.message }, { status: 400 });
+	} catch (err) {
+		const message = err instanceof Error ? err.message : "Invalid input";
+		return NextResponse.json({ error: message }, { status: 400 });
 	}
 }
 

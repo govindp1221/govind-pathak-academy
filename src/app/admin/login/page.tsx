@@ -19,8 +19,9 @@ export default function AdminLoginPage() {
 			});
 			if (!res.ok) throw new Error("Invalid credentials");
 			window.location.href = "/admin/dashboard";
-		} catch (err: any) {
-			setError(err.message || "Login failed");
+		} catch (err) {
+			const message = err instanceof Error ? err.message : "Login failed";
+			setError(message);
 		} finally {
 			setLoading(false);
 		}

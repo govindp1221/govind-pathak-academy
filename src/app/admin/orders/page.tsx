@@ -3,9 +3,11 @@ import Order from "@/models/Order";
 
 export const dynamic = "force-dynamic";
 
+type LeanOrder = { _id: string; userEmail: string; courseTitleSnapshot: string; amountInRupees: number; paymentStatus: string; createdAt: string };
+
 export default async function AdminOrdersPage() {
 	await connectToDatabase();
-	const orders = await Order.find().sort({ createdAt: -1 }).lean();
+	const orders = (await Order.find().sort({ createdAt: -1 }).lean()) as unknown as LeanOrder[];
 	return (
 		<section className="mx-auto max-w-6xl px-4 py-10">
 			<h1 className="text-2xl font-semibold">Orders</h1>
@@ -21,7 +23,7 @@ export default async function AdminOrdersPage() {
 						</tr>
 					</thead>
 					<tbody>
-						{orders.map((o: any) => (
+						{orders.map((o: LeanOrder) => (
 							<tr key={o._id} className="border-t">
 								<td className="p-2">{o.userEmail}</td>
 								<td className="p-2">{o.courseTitleSnapshot}</td>
